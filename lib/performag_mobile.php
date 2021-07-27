@@ -1,0 +1,6 @@
+<?php
+function performag_mobile(){
+echo "<style type='text/css' media='screen'>@media only screen and (max-width: 800px){body{background:none!important}body .flex-cnt{padding-left:10px;padding-right:10px}footer .ftm{padding:15px 10px!important}section.brd{padding:10px}.sAs section .twr{background:#fff}aside.sAs{widows:100%}div.wrp{width:100%}div.cnt .bSe.left,div.cnt .bSe.right{width:100%}.bSe article div.awr{padding:0;border:none}header div.hsm{right:0}body{padding-left:10px;padding-right:10px;background:#fff}div.bSeCont{display:inherit}div.sAsCont{display:inherit}div.ind{padding-top:5px}.met div.meta{margin-bottom:3px}.met div.mets{margin-top:-22px}div.ind .bSe article{margin-bottom:11px;border-bottom:1px solid #999}div.bt.dp{padding-top:23px}div.bSe article{margin-bottom:22px}div#shf{display:block;float:left}div.lrp textarea,div.lrp label,div.lrp h4,div.lrp .btn,div.lrp input[type='text']{margin-left:0}footer div.colm{margin-top:22px}footer div.colm section{width:96%}div.cnt .sAs.left,div.cnt .sAs.right{width:100%}a.fwit img{margin:0 0 24px}.brd ul{padding:5px}div.tve_post_lp .tve_lp_content { padding: 0 10px; }}</style>";
+} add_action('wp_head','performag_mobile');
+
+?>
