@@ -2,7 +2,7 @@
 
 function register_mysettings() {
 
-    register_setting( 'mfpd-settings-group', 'id1' );
+	register_setting( 'mfpd-settings-group', 'id1' );
 
 	register_setting( 'mfpd-settings-group', 'giatriid1' );
 
@@ -198,6 +198,10 @@ function register_mysettings() {
 
 	register_setting( 'mfpd-settings-group', 'thongbao');
 
+	register_setting( 'mfpd-settings-group', 'woo_controller_key');
+
+	register_setting( 'mfpd-settings-group', 'woo_controller_enable');
+
 }
 
 function mfpd_create_menu() {
@@ -212,907 +216,936 @@ add_action('admin_menu', 'mfpd_create_menu');
 
 function mfpd_settings_page() {
 
-?>
+	?>
 
-<div class="wrap">
+	<div class="wrap">
 
-<?php if( isset($_GET['settings-updated']) ) { ?>
+		<?php if( isset($_GET['settings-updated']) ) { ?>
 
-    <div id="message" class="updated">
+			<div id="message" class="updated">
 
-        <p><strong><?php _e('Settings saved.') ?></strong></p>
+				<p><strong><?php _e('Settings saved.') ?></strong></p>
 
-    </div>
+			</div>
 
-<?php } ?>
+		<?php } ?>
 
-<form method="post" action="options.php">
+		<form method="post" action="options.php">
 
-    <?php settings_fields( 'mfpd-settings-group' );
+			<?php settings_fields( 'mfpd-settings-group' );
 
-?>
+			?>
 
-<div id="documenter_content">
+			<div id="documenter_content">
 
-  <section id="welcome">
+				<section id="welcome">
 
-  	<h3>1. Chức năng cơ bản.</h3>
+					<h3>1. Chức năng cơ bản.</h3>
 
-		<table border="1" style="width: 100%">
+					<table border="1" style="width: 100%">
 
-			<tr>
+						<tr>
 
-				<th style="width: 5%; text-align:center;">STT</th>
+							<th style="width: 5%; text-align:center;">STT</th>
 
-				<th style="width: 90%; text-align: center;">CHỨC NĂNG</th>
+							<th style="width: 90%; text-align: center;">CHỨC NĂNG</th>
 
-				<th style="width: 5%;">ON/OFF</th>
+							<th style="width: 5%;">ON/OFF</th>
 
-			</tr>
+						</tr>
 
 
 
-			<tr>
+						<tr>
 
-				<td style="text-align:center;">1</td>
+							<td style="text-align:center;">1</td>
 
-				<td>Chuyển hướng 404 - <textarea style="width: 79%;" name="move_page_404" placeholder="http://link thay thế!" rows="1"><?php echo get_option('move_page_404'); ?></textarea></td>
+							<td>Chuyển hướng 404 - <textarea style="width: 79%;" name="move_page_404" placeholder="http://link thay thế!" rows="1"><?php echo get_option('move_page_404'); ?></textarea></td>
 
-				<td><input type="checkbox" <?php if (get_option('404_to_home' )=='co') {echo 'checked="true"';} ?>value="co" name="404_to_home"> | 1</td>
+							<td><input type="checkbox" <?php if (get_option('404_to_home' )=='co') {echo 'checked="true"';} ?>value="co" name="404_to_home"> | 1</td>
 
-			</tr>
+						</tr>
 
 
 
-			<tr>
+						<tr>
 
-				<td style="text-align:center;">2</td>
+							<td style="text-align:center;">2</td>
 
-				<td>Theo dõi đăng bài - {Setup Plugin <a target=_blank href="//vi.wordpress.org/plugins/postman-smtp/">Postman SMTP Mailer/Email Log</a>}</td>
+							<td>Theo dõi đăng bài - {Setup Plugin <a target=_blank href="//vi.wordpress.org/plugins/postman-smtp/">Postman SMTP Mailer/Email Log</a>}</td>
 
-				<td><input type="checkbox" <?php if (get_option('email_admin_if' )=='co') {echo 'checked="true"';} ?>value="co" name="email_admin_if"> | 2</td>
+							<td><input type="checkbox" <?php if (get_option('email_admin_if' )=='co') {echo 'checked="true"';} ?>value="co" name="email_admin_if"> | 2</td>
 
-			</tr>
+						</tr>
 
 
 
-			<tr>
+						<tr>
 
-				<td style="text-align:center;">3</td>
+							<td style="text-align:center;">3</td>
 
-				<td>File_exists{TEMPLATEPATH . "/single-{$cat->term_id}.php"}</td>
+							<td>File_exists{TEMPLATEPATH . "/single-{$cat->term_id}.php"}</td>
 
-				<td><input type="checkbox" <?php if (get_option('custom_templates' )=='co') {echo 'checked="true"';} ?>value="co" name="custom_templates"> | 3</td>
+							<td><input type="checkbox" <?php if (get_option('custom_templates' )=='co') {echo 'checked="true"';} ?>value="co" name="custom_templates"> | 3</td>
 
-			</tr>
+						</tr>
 
-			
 
-			<tr>
 
-				<td style="text-align:center;">4</td>
+						<tr>
 
-				<td>PHP to functions.php: <textarea style="width: 78.5%;" name="code_function" placeholder="add_action() | add_filter()" rows="1"><?php echo get_option('code_function'); ?></textarea> </td>
+							<td style="text-align:center;">4</td>
 
-				<td><input type="checkbox" <?php if (get_option('php_in_function' )=='co') {echo 'checked="true"';} ?>value="co" name="php_in_function"> | 4</td>
+							<td>PHP to functions.php: <textarea style="width: 78.5%;" name="code_function" placeholder="add_action() | add_filter()" rows="1"><?php echo get_option('code_function'); ?></textarea> </td>
 
-			</tr>
+							<td><input type="checkbox" <?php if (get_option('php_in_function' )=='co') {echo 'checked="true"';} ?>value="co" name="php_in_function"> | 4</td>
 
+						</tr>
 
 
-			<tr>
 
-				<td style="text-align:center;">5</td>
+						<tr>
 
-				<td>Show number Tags: <textarea style="width: 80%;" name="sotags" placeholder="Có bao nhiêu Tags được hiển thị | Nhập số!" rows="1"><?php echo get_option('sotags'); ?></textarea> </td>
+							<td style="text-align:center;">5</td>
 
-				<td><input type="checkbox" <?php if (get_option('hien_thi_tags' )=='co') {echo 'checked="true"';} ?>value="co" name="hien_thi_tags"> | 5</td>
+							<td>Show number Tags: <textarea style="width: 80%;" name="sotags" placeholder="Có bao nhiêu Tags được hiển thị | Nhập số!" rows="1"><?php echo get_option('sotags'); ?></textarea> </td>
 
-			</tr>
+							<td><input type="checkbox" <?php if (get_option('hien_thi_tags' )=='co') {echo 'checked="true"';} ?>value="co" name="hien_thi_tags"> | 5</td>
 
-			
+						</tr>
 
-			<tr>
 
-				<td style="text-align:center;">6</td>
 
-				<td>Hiển thị plugins có trong hệ thống.</td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('tat_mo_plugin' )=='co') {echo 'checked="true"';} ?>value="co" name="tat_mo_plugin"> | 6</td>
+							<td style="text-align:center;">6</td>
 
-			</tr>
+							<td>Hiển thị plugins có trong hệ thống.</td>
 
+							<td><input type="checkbox" <?php if (get_option('tat_mo_plugin' )=='co') {echo 'checked="true"';} ?>value="co" name="tat_mo_plugin"> | 6</td>
 
+						</tr>
 
-			<tr>
 
-				<td style="text-align:center;">7</td>
 
-				<td>Bật update hệ thống WordPress.</td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('tat_mo_updates' )=='co') {echo 'checked="true"';} ?>value="co" name="tat_mo_updates"> | 7</td>
+							<td style="text-align:center;">7</td>
 
-			</tr>
+							<td>Bật update hệ thống WordPress.</td>
 
+							<td><input type="checkbox" <?php if (get_option('tat_mo_updates' )=='co') {echo 'checked="true"';} ?>value="co" name="tat_mo_updates"> | 7</td>
 
+						</tr>
 
-			<tr>
 
-				<td style="text-align:center;">8</td>
 
-				<td>Removes menu for all users{dashboard, plugins, users, tools, settings}</td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('tat_menu_ql' )=='co') {echo 'checked="true"';} ?>value="co" name="tat_menu_ql"> | 8</td>
+							<td style="text-align:center;">8</td>
 
-			</tr>
+							<td>Removes menu for all users{dashboard, plugins, users, tools, settings}</td>
 
+							<td><input type="checkbox" <?php if (get_option('tat_menu_ql' )=='co') {echo 'checked="true"';} ?>value="co" name="tat_menu_ql"> | 8</td>
 
-			<tr>
+						</tr>
 
-				<td style="text-align:center;">9</td>
 
-				<td>Thông báo: <textarea style="width: 87.5%;" name="thongbao" placeholder="Nội dung thông báo đến thành viên!" rows="1"><?php echo get_option('thongbao'); ?></textarea> </td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('hien_thi_thongbao' )=='co') {echo 'checked="true"';} ?>value="co" name="hien_thi_thongbao"> | 9</td>
+							<td style="text-align:center;">9</td>
 
-			</tr>
+							<td>Thông báo: <textarea style="width: 87.5%;" name="thongbao" placeholder="Nội dung thông báo đến thành viên!" rows="1"><?php echo get_option('thongbao'); ?></textarea> </td>
 
-			<tr>
+							<td><input type="checkbox" <?php if (get_option('hien_thi_thongbao' )=='co') {echo 'checked="true"';} ?>value="co" name="hien_thi_thongbao"> | 9</td>
 
-				<td style="text-align:center;">10</td>
+						</tr>
 
-				<td>Trưởng sửa chữa!</td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('tb_sua_chua' )=='co') {echo 'checked="true"';} ?>value="co" name="tb_sua_chua"> | 10</td>
+							<td style="text-align:center;">10</td>
 
-			</tr>
+							<td>Trưởng sửa chữa!</td>
 
-		</table>
+							<td><input type="checkbox" <?php if (get_option('tb_sua_chua' )=='co') {echo 'checked="true"';} ?>value="co" name="tb_sua_chua"> | 10</td>
 
-<br/>
+						</tr>
 
-&para; Dev:
+					</table>
 
-<a href="/wp-admin/options.php">options.php</a>
+					<br/>
 
-</section>
+					&para; Dev:
 
-<hr/>
+					<a href="/wp-admin/options.php">options.php</a>
 
-<section id="Shortcode">
+				</section>
 
-	<h3>2. Tự tạo Shortcode. [ <input type="checkbox" <?php if (get_option('bat_shortcode' )=='co') {echo 'checked="true"';} ?>value="co" name="bat_shortcode"> ]</h3>
+				<hr/>
 
-		<table border="1" style="width: 100%">
+				<section id="Shortcode">
 
-			<tr>
+					<h3>2. Tự tạo Shortcode. [ <input type="checkbox" <?php if (get_option('bat_shortcode' )=='co') {echo 'checked="true"';} ?>value="co" name="bat_shortcode"> ]</h3>
 
-				<th style="width: 5%; text-align:center;">STT</th>
+					<table border="1" style="width: 100%">
 
-				<th style="width: 25%; text-align: center;">TÊN</th>
+						<tr>
 
-				<th style="width: 65%; text-align: center;">NỘI DUNG</th>
+							<th style="width: 5%; text-align:center;">STT</th>
 
-				<th style="width: 5%;">ON/OFF</th>
+							<th style="width: 25%; text-align: center;">TÊN</th>
 
-				
+							<th style="width: 65%; text-align: center;">NỘI DUNG</th>
 
-			</tr>
+							<th style="width: 5%;">ON/OFF</th>
 
-			<tr>
 
-				<td style="text-align:center;">1</td>
 
-				<td><textarea name="shortcode1" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode1'); ?></textarea></td>
+						</tr>
 
-				<td><textarea name="conshortcode1" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode1'); ?></textarea></td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('sd1' )=='co') {echo 'checked="true"';} ?>value="co" name="sd1"> | 1</td>
+							<td style="text-align:center;">1</td>
 
-			</tr>
+							<td><textarea name="shortcode1" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode1'); ?></textarea></td>
 
-			<tr>
+							<td><textarea name="conshortcode1" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode1'); ?></textarea></td>
 
-				<td style="text-align:center;">2</td>
+							<td><input type="checkbox" <?php if (get_option('sd1' )=='co') {echo 'checked="true"';} ?>value="co" name="sd1"> | 1</td>
 
-				<td><textarea name="shortcode2" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode2'); ?></textarea></td>
+						</tr>
 
-				<td><textarea name="conshortcode2" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode2'); ?></textarea></td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('sd2' )=='co') {echo 'checked="true"';} ?>value="co" name="sd2"> | 1</td>
+							<td style="text-align:center;">2</td>
 
-			</tr>
+							<td><textarea name="shortcode2" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode2'); ?></textarea></td>
 
-			<tr>
+							<td><textarea name="conshortcode2" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode2'); ?></textarea></td>
 
-				<td style="text-align:center;">3</td>
+							<td><input type="checkbox" <?php if (get_option('sd2' )=='co') {echo 'checked="true"';} ?>value="co" name="sd2"> | 1</td>
 
-				<td><textarea name="shortcode3" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode3'); ?></textarea></td>
+						</tr>
 
-				<td><textarea name="conshortcode3" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode3'); ?></textarea></td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('sd3' )=='co') {echo 'checked="true"';} ?>value="co" name="sd3"> | 3</td>
+							<td style="text-align:center;">3</td>
 
-			</tr>
+							<td><textarea name="shortcode3" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode3'); ?></textarea></td>
 
-			<tr>
+							<td><textarea name="conshortcode3" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode3'); ?></textarea></td>
 
-				<td style="text-align:center;">4</td>
+							<td><input type="checkbox" <?php if (get_option('sd3' )=='co') {echo 'checked="true"';} ?>value="co" name="sd3"> | 3</td>
 
-				<td><textarea name="shortcode4" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode4'); ?></textarea></td>
+						</tr>
 
-				<td><textarea name="conshortcode4" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode4'); ?></textarea></td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('sd4' )=='co') {echo 'checked="true"';} ?>value="co" name="sd4"> | 4</td>
+							<td style="text-align:center;">4</td>
 
-			</tr>
+							<td><textarea name="shortcode4" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode4'); ?></textarea></td>
 
-			<tr>
+							<td><textarea name="conshortcode4" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode4'); ?></textarea></td>
 
-				<td style="text-align:center;">5</td>
+							<td><input type="checkbox" <?php if (get_option('sd4' )=='co') {echo 'checked="true"';} ?>value="co" name="sd4"> | 4</td>
 
-				<td><textarea name="shortcode5" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode5'); ?></textarea></td>
+						</tr>
 
-				<td><textarea name="conshortcode5" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode5'); ?></textarea></td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('sd5' )=='co') {echo 'checked="true"';} ?>value="co" name="sd5"> | 5</td>
+							<td style="text-align:center;">5</td>
 
-			</tr>
+							<td><textarea name="shortcode5" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode5'); ?></textarea></td>
 
-			<tr>
+							<td><textarea name="conshortcode5" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode5'); ?></textarea></td>
 
-				<td style="text-align:center;">6</td>
+							<td><input type="checkbox" <?php if (get_option('sd5' )=='co') {echo 'checked="true"';} ?>value="co" name="sd5"> | 5</td>
 
-				<td><textarea name="shortcode6" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode6'); ?></textarea></td>
+						</tr>
 
-				<td><textarea name="conshortcode6" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode6'); ?></textarea></td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('sd6' )=='co') {echo 'checked="true"';} ?>value="co" name="sd6"> | 6</td>
+							<td style="text-align:center;">6</td>
 
-			</tr>
+							<td><textarea name="shortcode6" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode6'); ?></textarea></td>
 
-			<tr>
+							<td><textarea name="conshortcode6" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode6'); ?></textarea></td>
 
-				<td style="text-align:center;">7</td>
+							<td><input type="checkbox" <?php if (get_option('sd6' )=='co') {echo 'checked="true"';} ?>value="co" name="sd6"> | 6</td>
 
-				<td><textarea name="shortcode7" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode7'); ?></textarea></td>
+						</tr>
 
-				<td><textarea name="conshortcode7" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode7'); ?></textarea></td>
+						<tr>
 
-				<td><input type="checkbox" <?php if (get_option('sd7' )=='co') {echo 'checked="true"';} ?>value="co" name="sd7"> | 7</td>
+							<td style="text-align:center;">7</td>
 
-			</tr>
+							<td><textarea name="shortcode7" placeholder="Tên Shortcode" rows="1"><?php echo get_option('shortcode7'); ?></textarea></td>
 
-		</table>		
+							<td><textarea name="conshortcode7" placeholder="Nội dung Shortcode" rows="1"><?php echo get_option('conshortcode7'); ?></textarea></td>
 
-</section>
+							<td><input type="checkbox" <?php if (get_option('sd7' )=='co') {echo 'checked="true"';} ?>value="co" name="sd7"> | 7</td>
 
-<hr/>
+						</tr>
 
-<section id="chen_code_tracking">
+					</table>		
 
-	<h3>3. Chèn code Tracking.</h3>
+				</section>
 
-		<h4 style="font-weight: 400;font-size: 16px;display: block;padding: 3px;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">1. Facebook: Copy the code below and paste it between the < head> and </ head> in your website code.</h4>
+				<hr/>
 
-		<h4 style="font-weight: 400;font-size: 16px;display: block;padding: 3px;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">2. Google Adwords: Copy the tag in the box and paste it between the < body> </ body> tags of the page you'd like to track.</h4>
+				<section id="chen_code_tracking">
 
-		<h4 style="font-weight: 400;font-size: 16px;display: block;padding: 3px;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">3. Google Analytics: Copy the tag in the box and paste it between the < head> </ head> tags of the page you'd like to track.</h4>
+					<h3>3. Chèn code Tracking.</h3>
 
-		<h4 style="font-weight: 400;font-size: 16px;display: block;padding: 3px;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">4. Bạn cũng có thể chèn bất cứ thứ gì bạn muốn vào < head> và < body></h4>
+					<h4 style="font-weight: 400;font-size: 16px;display: block;padding: 3px;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">1. Facebook: Copy the code below and paste it between the < head> and </ head> in your website code.</h4>
 
-<br/>
+					<h4 style="font-weight: 400;font-size: 16px;display: block;padding: 3px;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">2. Google Adwords: Copy the tag in the box and paste it between the < body> </ body> tags of the page you'd like to track.</h4>
 
-	<table border="1" style="width: 100%">
+					<h4 style="font-weight: 400;font-size: 16px;display: block;padding: 3px;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">3. Google Analytics: Copy the tag in the box and paste it between the < head> </ head> tags of the page you'd like to track.</h4>
 
-			<tr>
+					<h4 style="font-weight: 400;font-size: 16px;display: block;padding: 3px;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">4. Bạn cũng có thể chèn bất cứ thứ gì bạn muốn vào < head> và < body></h4>
 
-				<th style="width: 5%; text-align:center;">STT</th>
+					<br/>
 
-				<th style="width: 20%; text-align: center;">ID (Post or Page)</th>
+					<table border="1" style="width: 100%">
 
-				<th style="width: 65%; text-align: center;">Value ( Code Tracking )</th>
+						<tr>
 
-				<th style="width: 10%; text-align: center;">Ok?</th>				
+							<th style="width: 5%; text-align:center;">STT</th>
 
-			</tr>
+							<th style="width: 20%; text-align: center;">ID (Post or Page)</th>
 
-			<tr>
+							<th style="width: 65%; text-align: center;">Value ( Code Tracking )</th>
 
-				<td style="text-align:center;">1</td>
+							<th style="width: 10%; text-align: center;">Ok?</th>				
 
-				<td><textarea name="id1" rows="2"><?php echo get_option('id1'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid1" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid1'); ?></textarea>
+							<td style="text-align:center;">1</td>
 
-					<textarea name="giatriid1Adwords" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1Adwords'); ?></textarea>
+							<td><textarea name="id1" rows="2"><?php echo get_option('id1'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id1'); ?>" readonly="false"></td>
+								<textarea name="giatriid1" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid1'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1Adwords" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1Adwords'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">2</td>
+							<td><input type="text" value="<?php echo get_option('id1'); ?>" readonly="false"></td>
 
-				<td><textarea name="id2" rows="2"><?php echo get_option('id2'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid2" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid2'); ?></textarea>
+							<td style="text-align:center;">2</td>
 
-					<textarea name="giatriid22" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid22'); ?></textarea>
+							<td><textarea name="id2" rows="2"><?php echo get_option('id2'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id2'); ?>" readonly="false"></td>
+								<textarea name="giatriid2" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid2'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid22" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid22'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">3</td>
+							<td><input type="text" value="<?php echo get_option('id2'); ?>" readonly="false"></td>
 
-				<td><textarea name="id3" rows="2"><?php echo get_option('id3'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid3" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid3'); ?></textarea>
+							<td style="text-align:center;">3</td>
 
-					<textarea name="giatriid33" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid33'); ?></textarea>
+							<td><textarea name="id3" rows="2"><?php echo get_option('id3'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id3'); ?>" readonly="false"></td>
+								<textarea name="giatriid3" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid3'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid33" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid33'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">4</td>
+							<td><input type="text" value="<?php echo get_option('id3'); ?>" readonly="false"></td>
 
-				<td><textarea name="id4" rows="2"><?php echo get_option('id4'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid4" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid4'); ?></textarea>
+							<td style="text-align:center;">4</td>
 
-					<textarea name="giatriid44" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid44'); ?></textarea>
+							<td><textarea name="id4" rows="2"><?php echo get_option('id4'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id4'); ?>" readonly="false"></td>
+								<textarea name="giatriid4" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid4'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid44" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid44'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">5</td>
+							<td><input type="text" value="<?php echo get_option('id4'); ?>" readonly="false"></td>
 
-				<td><textarea name="id5" rows="2"><?php echo get_option('id5'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid5" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid5'); ?></textarea>
+							<td style="text-align:center;">5</td>
 
-					<textarea name="giatriid55" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid55'); ?></textarea>
+							<td><textarea name="id5" rows="2"><?php echo get_option('id5'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id5'); ?>" readonly="false"></td>
+								<textarea name="giatriid5" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid5'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid55" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid55'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">6</td>
+							<td><input type="text" value="<?php echo get_option('id5'); ?>" readonly="false"></td>
 
-				<td><textarea name="id6" rows="2"><?php echo get_option('id6'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid6" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid6'); ?></textarea>
+							<td style="text-align:center;">6</td>
 
-					<textarea name="giatriid66" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid66'); ?></textarea>
+							<td><textarea name="id6" rows="2"><?php echo get_option('id6'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id6'); ?>" readonly="false"></td>
+								<textarea name="giatriid6" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid6'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid66" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid66'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">7</td>
+							<td><input type="text" value="<?php echo get_option('id6'); ?>" readonly="false"></td>
 
-				<td><textarea name="id7" rows="2"><?php echo get_option('id7'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid7" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid7'); ?></textarea>
+							<td style="text-align:center;">7</td>
 
-					<textarea name="giatriid77" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid77'); ?></textarea>
+							<td><textarea name="id7" rows="2"><?php echo get_option('id7'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id7'); ?>" readonly="false"></td>
+								<textarea name="giatriid7" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid7'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid77" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid77'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">8</td>
+							<td><input type="text" value="<?php echo get_option('id7'); ?>" readonly="false"></td>
 
-				<td><textarea name="id8" rows="2"><?php echo get_option('id8'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid8" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid8'); ?></textarea>
+							<td style="text-align:center;">8</td>
 
-					<textarea name="giatriid88" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid88'); ?></textarea>
+							<td><textarea name="id8" rows="2"><?php echo get_option('id8'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id8'); ?>" readonly="false"></td>
+								<textarea name="giatriid8" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid8'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid88" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid88'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">9</td>
+							<td><input type="text" value="<?php echo get_option('id8'); ?>" readonly="false"></td>
 
-				<td><textarea name="id9" rows="2"><?php echo get_option('id9'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid9" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid9'); ?></textarea>
+							<td style="text-align:center;">9</td>
 
-					<textarea name="giatriid99" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid99'); ?></textarea>
+							<td><textarea name="id9" rows="2"><?php echo get_option('id9'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id9'); ?>" readonly="false"></td>
+								<textarea name="giatriid9" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid9'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid99" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid99'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">10</td>
+							<td><input type="text" value="<?php echo get_option('id9'); ?>" readonly="false"></td>
 
-				<td><textarea name="id10" rows="2"><?php echo get_option('id10'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid10" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid10'); ?></textarea>
+							<td style="text-align:center;">10</td>
 
-					<textarea name="giatriid1010" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1010'); ?></textarea>
+							<td><textarea name="id10" rows="2"><?php echo get_option('id10'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id10'); ?>" readonly="false"></td>
+								<textarea name="giatriid10" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid10'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1010" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1010'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">11</td>
+							<td><input type="text" value="<?php echo get_option('id10'); ?>" readonly="false"></td>
 
-				<td><textarea name="id11" rows="2"><?php echo get_option('id11'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid11" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid11'); ?></textarea>
+							<td style="text-align:center;">11</td>
 
-					<textarea name="giatriid1111" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1111'); ?></textarea>
+							<td><textarea name="id11" rows="2"><?php echo get_option('id11'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id11'); ?>" readonly="false"></td>
+								<textarea name="giatriid11" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid11'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1111" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1111'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">12</td>
+							<td><input type="text" value="<?php echo get_option('id11'); ?>" readonly="false"></td>
 
-				<td><textarea name="id12" rows="2"><?php echo get_option('id12'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid12" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid12'); ?></textarea>
+							<td style="text-align:center;">12</td>
 
-					<textarea name="giatriid1212" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1212'); ?></textarea>
+							<td><textarea name="id12" rows="2"><?php echo get_option('id12'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id12'); ?>" readonly="false"></td>
+								<textarea name="giatriid12" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid12'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1212" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1212'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">13</td>
+							<td><input type="text" value="<?php echo get_option('id12'); ?>" readonly="false"></td>
 
-				<td><textarea name="id13" rows="2"><?php echo get_option('id13'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid13" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid13'); ?></textarea>
+							<td style="text-align:center;">13</td>
 
-					<textarea name="giatriid1313" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1313'); ?></textarea>
+							<td><textarea name="id13" rows="2"><?php echo get_option('id13'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id13'); ?>" readonly="false"></td>
+								<textarea name="giatriid13" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid13'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1313" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1313'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">14</td>
+							<td><input type="text" value="<?php echo get_option('id13'); ?>" readonly="false"></td>
 
-				<td><textarea name="id14" rows="2"><?php echo get_option('id14'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid14" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid14'); ?></textarea>
+							<td style="text-align:center;">14</td>
 
-					<textarea name="giatriid1414" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1414'); ?></textarea>
+							<td><textarea name="id14" rows="2"><?php echo get_option('id14'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id14'); ?>" readonly="false"></td>
+								<textarea name="giatriid14" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid14'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1414" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1414'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">15</td>
+							<td><input type="text" value="<?php echo get_option('id14'); ?>" readonly="false"></td>
 
-				<td><textarea name="id15" rows="2"><?php echo get_option('id15'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid15" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid15'); ?></textarea>
+							<td style="text-align:center;">15</td>
 
-					<textarea name="giatriid1515" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1515'); ?></textarea>
+							<td><textarea name="id15" rows="2"><?php echo get_option('id15'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id15'); ?>" readonly="false"></td>
+								<textarea name="giatriid15" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid15'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1515" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1515'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">16</td>
+							<td><input type="text" value="<?php echo get_option('id15'); ?>" readonly="false"></td>
 
-				<td><textarea name="id16" rows="2"><?php echo get_option('id16'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid16" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid16'); ?></textarea>
+							<td style="text-align:center;">16</td>
 
-					<textarea name="giatriid1616" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1616'); ?></textarea>
+							<td><textarea name="id16" rows="2"><?php echo get_option('id16'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id16'); ?>" readonly="false"></td>
+								<textarea name="giatriid16" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid16'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1616" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1616'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">17</td>
+							<td><input type="text" value="<?php echo get_option('id16'); ?>" readonly="false"></td>
 
-				<td><textarea name="id17" rows="2"><?php echo get_option('id17'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid17" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid17'); ?></textarea>
+							<td style="text-align:center;">17</td>
 
-					<textarea name="giatriid1717" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1717'); ?></textarea>
+							<td><textarea name="id17" rows="2"><?php echo get_option('id17'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id17'); ?>" readonly="false"></td>
+								<textarea name="giatriid17" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid17'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1717" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1717'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">18</td>
+							<td><input type="text" value="<?php echo get_option('id17'); ?>" readonly="false"></td>
 
-				<td><textarea name="id18" rows="2"><?php echo get_option('id18'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid18" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid18'); ?></textarea>
+							<td style="text-align:center;">18</td>
 
-					<textarea name="giatriid1818" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1818'); ?></textarea>
+							<td><textarea name="id18" rows="2"><?php echo get_option('id18'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id18'); ?>" readonly="false"></td>
+								<textarea name="giatriid18" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid18'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1818" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1818'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">19</td>
+							<td><input type="text" value="<?php echo get_option('id18'); ?>" readonly="false"></td>
 
-				<td><textarea name="id19" rows="2"><?php echo get_option('id19'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid19" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid19'); ?></textarea>
+							<td style="text-align:center;">19</td>
 
-					<textarea name="giatriid1919" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1919'); ?></textarea>
+							<td><textarea name="id19" rows="2"><?php echo get_option('id19'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id19'); ?>" readonly="false"></td>
+								<textarea name="giatriid19" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid19'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid1919" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid1919'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">20</td>
+							<td><input type="text" value="<?php echo get_option('id19'); ?>" readonly="false"></td>
 
-				<td><textarea name="id20" rows="2"><?php echo get_option('id20'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid20" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid20'); ?></textarea>
+							<td style="text-align:center;">20</td>
 
-					<textarea name="giatriid2020" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid2020'); ?></textarea>
+							<td><textarea name="id20" rows="2"><?php echo get_option('id20'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id20'); ?>" readonly="false"></td>
+								<textarea name="giatriid20" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid20'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid2020" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid2020'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">21</td>
+							<td><input type="text" value="<?php echo get_option('id20'); ?>" readonly="false"></td>
 
-				<td><textarea name="id21" rows="2"><?php echo get_option('id21'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid21" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid21'); ?></textarea>
+							<td style="text-align:center;">21</td>
 
-					<textarea name="giatriid2121" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid2121'); ?></textarea>
+							<td><textarea name="id21" rows="2"><?php echo get_option('id21'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id21'); ?>" readonly="false"></td>
+								<textarea name="giatriid21" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid21'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid2121" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid2121'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">22</td>
+							<td><input type="text" value="<?php echo get_option('id21'); ?>" readonly="false"></td>
 
-				<td><textarea name="id22" rows="2"><?php echo get_option('id22'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid22_fix" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid22_fix'); ?></textarea>
+							<td style="text-align:center;">22</td>
 
-					<textarea name="giatriid2222" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid2222'); ?></textarea>
+							<td><textarea name="id22" rows="2"><?php echo get_option('id22'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id22'); ?>" readonly="false"/></td>
+								<textarea name="giatriid22_fix" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid22_fix'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid2222" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid2222'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align:center;">23</td>
+							<td><input type="text" value="<?php echo get_option('id22'); ?>" readonly="false"/></td>
 
-				<td><textarea name="id23" rows="2"><?php echo get_option('id23'); ?></textarea></td>
+						</tr>
 
-				<td>
+						<tr>
 
-					<textarea name="giatriid23" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid23'); ?></textarea>
+							<td style="text-align:center;">23</td>
 
-					<textarea name="giatriid2323" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid2323'); ?></textarea>
+							<td><textarea name="id23" rows="2"><?php echo get_option('id23'); ?></textarea></td>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="<?php echo get_option('id23'); ?>" readonly="false"/></td>
+								<textarea name="giatriid23" placeholder="Facebook ( head )" rows="1"><?php echo get_option('giatriid23'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriid2323" placeholder="Adwords ( body )" rows="1"><?php echo get_option('giatriid2323'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td rowspan="2" style="text-align:center;">24</td>
+							<td><input type="text" value="<?php echo get_option('id23'); ?>" readonly="false"/></td>
 
-				<td rowspan="2">
+						</tr>
 
-					<textarea type="text" name="idtrangthanhtoan" rows="6" placeholder="ID Page Checkout [WooCommerce]"><?php echo get_option('idtrangthanhtoan'); ?></textarea>
+						<tr>
 
-				</td>
+							<td rowspan="2" style="text-align:center;">24</td>
 
-				<td>
+							<td rowspan="2">
 
-					<textarea name="giatriidthanhtoanthanhcong" placeholder="Facebook ( head ) | Đặt hàng thành công!" rows="1"><?php echo get_option('giatriidthanhtoanthanhcong'); ?></textarea>
+								<textarea type="text" name="idtrangthanhtoan" rows="6" placeholder="ID Page Checkout [WooCommerce]"><?php echo get_option('idtrangthanhtoan'); ?></textarea>
 
+							</td>
 
+							<td>
 
-					<textarea name="giatriidthanhtoanthanhconggg" placeholder="Adwords ( body ) | Đặt hàng thành công!" rows="1"><?php echo get_option('giatriidthanhtoanthanhconggg'); ?></textarea>
+								<textarea name="giatriidthanhtoanthanhcong" placeholder="Facebook ( head ) | Đặt hàng thành công!" rows="1"><?php echo get_option('giatriidthanhtoanthanhcong'); ?></textarea>
 
-				</td>
 
-				<td><input type="text" value="$_GET['key']='wc_order_'" readonly="false"/></td>
 
-			</tr>
+								<textarea name="giatriidthanhtoanthanhconggg" placeholder="Adwords ( body ) | Đặt hàng thành công!" rows="1"><?php echo get_option('giatriidthanhtoanthanhconggg'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td>
+							<td><input type="text" value="$_GET['key']='wc_order_'" readonly="false"/></td>
 
-					<textarea name="giatriidthanhtoanthanhkhongcong" placeholder="Facebook ( head ) | Điền thông tin thanh toán." rows="1"><?php echo get_option('giatriidthanhtoanthanhkhongcong'); ?></textarea>
+						</tr>
 
-					<textarea name="giatriidthanhtoanthanhkhongconggg" placeholder="Adwords ( body ) | Điền thông tin thanh toán." rows="1"><?php echo get_option('giatriidthanhtoanthanhkhongconggg'); ?></textarea>
+						<tr>
 
-				</td>
+							<td>
 
-				<td><input type="text" value="$_GET['key']=' '" readonly="false"></td>
+								<textarea name="giatriidthanhtoanthanhkhongcong" placeholder="Facebook ( head ) | Điền thông tin thanh toán." rows="1"><?php echo get_option('giatriidthanhtoanthanhkhongcong'); ?></textarea>
 
-			</tr>
+								<textarea name="giatriidthanhtoanthanhkhongconggg" placeholder="Adwords ( body ) | Điền thông tin thanh toán." rows="1"><?php echo get_option('giatriidthanhtoanthanhkhongconggg'); ?></textarea>
 
-			<tr>
+							</td>
 
-				<td style="text-align: center">25</td>
+							<td><input type="text" value="$_GET['key']=' '" readonly="false"></td>
 
-				<td style="text-align: center">Trang còn lại<br/>Ngoại trừ( ID1 -> ID24 )</td>
+						</tr>
 
-				<td colspan="2">
+						<tr>
 
-					<textarea name="idconlai" cols= "55" placeholder="Facebook ( head )" rows="1"><?php echo get_option('idconlai'); ?></textarea>
+							<td style="text-align: center">25</td>
 
-					<textarea name="idconlaigg" cols= "55" placeholder="Adwords ( body )" rows="1"><?php echo get_option('idconlaigg'); ?></textarea>
+							<td style="text-align: center">Trang còn lại<br/>Ngoại trừ( ID1 -> ID24 )</td>
 
-				</td>
+							<td colspan="2">
 
-			</tr>
+								<textarea name="idconlai" cols= "55" placeholder="Facebook ( head )" rows="1"><?php echo get_option('idconlai'); ?></textarea>
 
-			<tr>
+								<textarea name="idconlaigg" cols= "55" placeholder="Adwords ( body )" rows="1"><?php echo get_option('idconlaigg'); ?></textarea>
 
-				<td rowspan="3" style="text-align: center">26</td>
+							</td>
 
-				<td rowspan="3" style="text-align: center">ALL PAGES < / head><br/>Không Bỏ qua ID nào!</td>
+						</tr>
 
-				<td colspan="2"><textarea name="all1" cols= "55" placeholder="IN CODE HEAD" rows="1"><?php echo get_option('all1'); ?></textarea></td>
+						<tr>
 
-			</tr>
+							<td rowspan="3" style="text-align: center">26</td>
 
-			<tr>
+							<td rowspan="3" style="text-align: center">ALL PAGES < / head><br/>Không Bỏ qua ID nào!</td>
 
-				<td colspan="2"><textarea name="all2" cols= "55" placeholder="IN CODE HEAD" rows="1"><?php echo get_option('all2'); ?></textarea></td>
+							<td colspan="2"><textarea name="all1" cols= "55" placeholder="IN CODE HEAD" rows="1"><?php echo get_option('all1'); ?></textarea></td>
 
-			</tr>
+						</tr>
 
-			<tr>
+						<tr>
 
-				<td colspan="2"><textarea name="all3" cols= "55" placeholder="IN CODE HEAD" rows="1"><?php echo get_option('all3'); ?></textarea></td>
+							<td colspan="2"><textarea name="all2" cols= "55" placeholder="IN CODE HEAD" rows="1"><?php echo get_option('all2'); ?></textarea></td>
 
-			</tr>
+						</tr>
 
-			<tr>
+						<tr>
 
-				<td rowspan="3" style="text-align: center">27</td>
+							<td colspan="2"><textarea name="all3" cols= "55" placeholder="IN CODE HEAD" rows="1"><?php echo get_option('all3'); ?></textarea></td>
 
-				<td rowspan="3" style="text-align: center">ALL PAGES < / body><br/>Không Bỏ qua ID nào!</td>
+						</tr>
 
-				<td colspan="2"><textarea name="allh1" cols= "55" placeholder="IN CODE BODY" rows="1"><?php echo get_option('allh1'); ?></textarea></td>
+						<tr>
 
-			</tr>
+							<td rowspan="3" style="text-align: center">27</td>
 
-			<tr>
+							<td rowspan="3" style="text-align: center">ALL PAGES < / body><br/>Không Bỏ qua ID nào!</td>
 
-				<td colspan="2"><textarea name="allh2" cols= "55" placeholder="IN CODE BODY" rows="1"><?php echo get_option('allh2'); ?></textarea></td>
+							<td colspan="2"><textarea name="allh1" cols= "55" placeholder="IN CODE BODY" rows="1"><?php echo get_option('allh1'); ?></textarea></td>
 
-			</tr>
+						</tr>
 
-			<tr>
+						<tr>
 
-				<td colspan="2"><textarea name="allh3" cols= "55" placeholder="IN CODE BODY" rows="1"><?php echo get_option('allh3'); ?></textarea></td>
+							<td colspan="2"><textarea name="allh2" cols= "55" placeholder="IN CODE BODY" rows="1"><?php echo get_option('allh2'); ?></textarea></td>
 
-			</tr>
+						</tr>
 
-	</table>
+						<tr>
 
-</section>
+							<td colspan="2"><textarea name="allh3" cols= "55" placeholder="IN CODE BODY" rows="1"><?php echo get_option('allh3'); ?></textarea></td>
 
-<hr/>
+						</tr>
 
-<section id="facebook_link">
+					</table>
 
-	<h3>4. Like Page, Share Facebook. [ <input type="checkbox" <?php if (get_option('on_off_face' )=='co') {echo 'checked="true"';} ?>value="co" name="on_off_face"> ]</h3>
+				</section>
 
-	<h4>Giúp like Fanpage Facebook trên website và chia sẻ bài viết trên Facebook.</h4>
+				<hr/>
 
-	<h4 style="font-weight: 400;font-size: 14px;display: block;padding: 5px 0;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">Mã tracking: ?utm_source=facebook-share&utm_campaign=call-to-share&utm_medium=footer-share&utm_content=[Tiêu đề bài viết]</h4>
+				<section id="facebook_link">
 
-	<textarea style="width:100%;" name="facebook_link" placeholder="http://link fanpage facebook của bạn!" rows="1"><?php echo get_option('facebook_link'); ?></textarea>
+					<h3>4. Like Page, Share Facebook. [ <input type="checkbox" <?php if (get_option('on_off_face' )=='co') {echo 'checked="true"';} ?>value="co" name="on_off_face"> ]</h3>
 
-</section>
+					<h4>Giúp like Fanpage Facebook trên website và chia sẻ bài viết trên Facebook.</h4>
 
-<hr/>
+					<h4 style="font-weight: 400;font-size: 14px;display: block;padding: 5px 0;margin: 0px;color: #6F6F6F;border: none !important;text-decoration: none;">Mã tracking: ?utm_source=facebook-share&utm_campaign=call-to-share&utm_medium=footer-share&utm_content=[Tiêu đề bài viết]</h4>
 
-<section id="tuy-bien-css">
+					<textarea style="width:100%;" name="facebook_link" placeholder="http://link fanpage facebook của bạn!" rows="1"><?php echo get_option('facebook_link'); ?></textarea>
 
-	<h3>5. Custom Css.</h3><br/>
+				</section>
 
-	<textarea style="width: 100%;" name="tuy-bien-css" cols= "100" placeholder="@media only screen and (max-width: 800px){
+				<hr/>
 
+				<section id="tuy-bien-css">
 
+					<h3>5. Custom Css.</h3><br/>
 
-}
+					<textarea style="width: 100%;" name="tuy-bien-css" cols= "100" placeholder="@media only screen and (max-width: 800px){
 
-@media only screen and (min-width: 800px){
 
 
+					}
 
-}" rows="20"><?php echo get_option('tuy-bien-css'); ?></textarea>
+					@media only screen and (min-width: 800px){
 
-</section>
 
-<hr/>
 
-<section id="them">
+					}" rows="20"><?php echo get_option('tuy-bien-css'); ?></textarea>
 
-	<h3>6. Thêm</h3><br/>
+				</section>
+				<section id="woo-controller">
 
-	<img src="<?php echo get_option('home'); ?>/wp-content/plugins/marnet-plugin/images/Field.png"/>
+					<h3>6. Woo Controller</h3><br/>
 
-</div>
+					<div class="wrap">
+						<h2>Woocommerce Controller</h2>
+						<div style="margin-top: 20px;">
+							<span>Active send order to external API?</span>
+							<input id="checkbox" type="checkbox" name="woo_controller_enable" value="1" <?php checked("1", get_option("woo_controller_enable")); ?> />
+						</div>
+						<div style="margin-top: 10px;">
+							<span>Paste your key:</span>
+							<input id="inputtext" type="text" name="woo_controller_key" value="<?php echo get_option("woo_controller_key"); ?>" />
+						</div>
+					</div>
 
-	<div id="documenter_sidebar"> 
+					<script type="text/javascript">
+						jQuery('#checkbox').change(function() {
+							if (jQuery('#checkbox').is(':checked') ){
+								jQuery('#inputtext').prop('required', true);
+							} else {
+								jQuery('#inputtext').prop('required', false);
+							}
+						})
+					</script>
 
-		<a href="//marnet.vn/" id="documenter_logo" rel="nofollow" target="_blank">
+				</section>
 
-			<img src="<?php echo get_option('home'); ?>/wp-content/plugins/marnet-plugin/images/logo.gif "/>
+				<hr/>
 
-		</a>
+				<section id="them">
 
-		<ol id="documenter_nav">
+					<h3>7. Thêm</h3><br/>
 
-			<li><a href="#welcome">1. Chức năng cơ bản.</a></li>
+					<img src="<?php echo get_option('home'); ?>/wp-content/plugins/marnet-plugin/images/Field.png"/>
 
-			<li><a href="#Shortcode">2. Tự tạo Shortcode.</a></li>
+				</div>
 
-			<li><a href="#chen_code_tracking">3. Chèn code Tracking.</a></li>
+				<div id="documenter_sidebar"> 
 
-			<li><a class="current" href="#facebook_link">4. Facebook.</a></li>
+					<a href="//marnet.vn/" id="documenter_logo" rel="nofollow" target="_blank">
 
-			<li><a href="#tuy-bien-css">5. Custom Css.</a></li>
+						<img src="<?php echo get_option('home'); ?>/wp-content/plugins/marnet-plugin/images/logo.gif "/>
 
-			<li><a href="#them">6. Thêm...</a></li>
+					</a>
 
-			<li><?php submit_button(); ?></li>
+					<ol id="documenter_nav">
 
-			<span class="byadmin"><p>MarNET Plugin. Version 4.5</p></span>
+						<li><a href="#welcome">1. Chức năng cơ bản.</a></li>
 
-		</ol>
+						<li><a href="#Shortcode">2. Tự tạo Shortcode.</a></li>
 
-	</div>
+						<li><a href="#chen_code_tracking">3. Chèn code Tracking.</a></li>
 
-<?php
+						<li><a class="current" href="#facebook_link">4. Facebook.</a></li>
 
-?>
+						<li><a href="#tuy-bien-css">5. Custom Css.</a></li>
 
-</form>
+						<li><a href="#woo-controller">6. Woocommerce Controller</a></li>
 
-</div>
+						<li><a href="#them">7. Thêm...</a></li>
 
-<?php }	?>
+						<li><?php submit_button(); ?></li>
+
+						<span class="byadmin"><p>MarNET Plugin. Version 4.5</p></span>
+
+					</ol>
+
+				</div>
+
+				<?php
+
+				?>
+
+			</form>
+
+		</div>
+
+		<?php }	?>

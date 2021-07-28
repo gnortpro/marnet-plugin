@@ -15,6 +15,8 @@ if (!defined('ABSPATH')) exit; // BẮT ĐẦU CODE :)
 include 'lib/Mobile_Detect.php'; // FILE PHP CHECK MOBILE(*)
 require_once dirname( __FILE__ ) . '/lib/setup.php'; // FILE CÀI ĐẶT
 require_once dirname( __FILE__ ) . '/lib/code-tracking.php'; // CHÈN CODE TRACKING
+require_once dirname( __FILE__ ) . '/lib/woo-controller.php';
+
 // Remove header;
 remove_action('wp_head', 'wp_generator');
 remove_action('wp_head', 'feed_links', 2);
