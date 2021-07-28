@@ -57,8 +57,8 @@ function woo_controller_send_data($order_id)
 			)
 		);
 
-		$url = 'https://enbt1r359fqxjtk.m.pipedream.net';
-    		// $url = 'https://staging.announceway.com/webhook/woocommerce/orders/create';
+		// $url = 'https://enbt1r359fqxjtk.m.pipedream.net';
+    		$url = 'https://staging.announceway.com/webhook/woocommerce/orders/create';
 		$body = array(
 			"order" => serialize($send_body),
 		);
